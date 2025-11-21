@@ -1,10 +1,11 @@
-
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منوی کافه دلنشین</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
         
         * {
             margin: 0;
@@ -14,84 +15,132 @@
         
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 50%, #C2FFD9 100%);
             min-height: 100vh;
             padding: 40px 20px;
+            animation: gradientShift 10s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 40px;
             padding: 50px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.8);
         }
         
         .header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
             padding-bottom: 30px;
-            border-bottom: 2px solid rgba(218, 165, 32, 0.3);
+            border-bottom: 3px dashed #FF6B9D;
+            position: relative;
+        }
+        
+        .coffee-icon {
+            font-size: 60px;
+            animation: bounce 2s ease-in-out infinite;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
         
         .logo {
-            font-size: 48px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #DAA520, #FFD700);
+            font-size: 56px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF6B9D, #FFA500, #FF6B9D);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            animation: colorShift 3s ease infinite;
+        }
+        
+        @keyframes colorShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(20deg); }
         }
         
         .tagline {
-            font-size: 16px;
-            color: #bbb;
-            font-weight: 300;
-            letter-spacing: 3px;
+            font-size: 18px;
+            color: #666;
+            font-weight: 400;
+            letter-spacing: 2px;
         }
         
         .section {
-            margin-bottom: 50px;
+            margin-bottom: 45px;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #FF6B9D, #FFA500);
+            padding: 20px 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .section-header:hover {
+            transform: rotate(0deg) scale(1.02);
         }
         
         .section-title {
             font-size: 32px;
-            font-weight: 600;
-            color: #DAA520;
-            margin-bottom: 30px;
-            position: relative;
-            padding-right: 20px;
-        }
-        
-        .section-title:before {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 6px;
-            height: 6px;
-            background: #DAA520;
-            border-radius: 50%;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .menu-item {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFE6F0 100%);
+            padding: 25px;
+            margin-bottom: 15px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transition: left 0.5s ease;
         }
         
         .menu-item:hover {
-            padding-right: 10px;
-            border-bottom-color: rgba(218, 165, 32, 0.3);
+            transform: translateX(-5px) scale(1.02);
+            border-color: #FF6B9D;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+        }
+        
+        .menu-item:hover:before {
+            left: 100%;
         }
         
         .item-info {
@@ -99,34 +148,58 @@
         }
         
         .item-name {
-            font-size: 20px;
-            font-weight: 500;
-            color: #fff;
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .item-emoji {
+            font-size: 26px;
         }
         
         .item-description {
-            font-size: 14px;
-            color: #999;
-            font-weight: 300;
+            font-size: 15px;
+            color: #666;
+            font-weight: 400;
         }
         
         .item-price {
-            font-size: 22px;
-            font-weight: 600;
-            color: #DAA520;
-            margin-right: 30px;
+            font-size: 26px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF6B9D, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-right: 20px;
+            min-width: 120px;
+            text-align: left;
         }
         
         .price-unit {
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 500;
         }
         
-        .divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.3), transparent);
-            margin: 40px 0;
+        .decorative-line {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+            gap: 15px;
+            font-size: 24px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 3px dashed #FF6B9D;
+            color: #666;
+            font-size: 16px;
         }
         
         @media (max-width: 768px) {
@@ -135,7 +208,7 @@
             }
             
             .logo {
-                font-size: 36px;
+                font-size: 42px;
             }
             
             .section-title {
@@ -145,6 +218,7 @@
             .menu-item {
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 20px;
             }
             
             .item-price {
@@ -157,122 +231,175 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">☕ CAFÉ ÉLÉGANT</div>
-            <div class="tagline">طعم لذت در هر جرعه</div>
+            <div class="coffee-icon">☕</div>
+            <div class="logo">کافه دلنشین</div>
+            <div class="tagline">جایی برای لبخند و لذت</div>
         </div>
         
         <div class="section">
-            <h2 class="section-title">نوشیدنی‌های گرم</h2>
+            <div class="section-header">
+                <h2 class="section-title">🔥 نوشیدنی‌های گرم</h2>
+            </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">اسپرسو</div>
-                    <div class="item-description">قهوه تازه دم کرده با دانه‌های برزیلی</div>
+                    <div class="item-name">
+                        <span class="item-emoji">☕</span>
+                        اسپرسو
+                    </div>
+                    <div class="item-description">قهوه تلخ و خوشمزه با دانه‌های تازه</div>
                 </div>
                 <div class="item-price">۴۵,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">کاپوچینو</div>
-                    <div class="item-description">اسپرسو، شیر بخار شده و فوم شیر</div>
+                    <div class="item-name">
+                        <span class="item-emoji">☕</span>
+                        کاپوچینو
+                    </div>
+                    <div class="item-description">اسپرسو با شیر گرم و فوم خامه‌ای</div>
                 </div>
                 <div class="item-price">۶۵,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">لاته</div>
-                    <div class="item-description">اسپرسو با شیر داغ و لایه‌ای از فوم</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🥛</span>
+                        لاته
+                    </div>
+                    <div class="item-description">قهوه ملایم با شیر داغ</div>
                 </div>
                 <div class="item-price">۷۰,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">موکا</div>
-                    <div class="item-description">ترکیب قهوه، شکلات و شیر داغ</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🍫</span>
+                        موکا
+                    </div>
+                    <div class="item-description">قهوه با شکلات و شیر خوشمزه</div>
                 </div>
                 <div class="item-price">۷۵,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">هات چاکلت</div>
-                    <div class="item-description">شکلات بلژیکی با شیر داغ و خامه</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🍫</span>
+                        هات چاکلت
+                    </div>
+                    <div class="item-description">شکلات داغ با خامه و مارشمالو</div>
                 </div>
                 <div class="item-price">۶۸,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">چای ماسالا</div>
-                    <div class="item-description">چای سیاه با ادویه‌های هندی و شیر</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🍵</span>
+                        چای ماسالا
+                    </div>
+                    <div class="item-description">چای معطر با ادویه و شیر</div>
                 </div>
                 <div class="item-price">۵۵,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
         </div>
         
-        <div class="divider"></div>
+        <div class="decorative-line">
+            <span>🌸</span>
+            <span>☀️</span>
+            <span>🌈</span>
+            <span>⭐</span>
+        </div>
         
         <div class="section">
-            <h2 class="section-title">نوشیدنی‌های سرد</h2>
+            <div class="section-header">
+                <h2 class="section-title">❄️ نوشیدنی‌های سرد</h2>
+            </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">آیس آمریکانو</div>
-                    <div class="item-description">اسپرسو با آب یخ و یخ خرد شده</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🧊</span>
+                        آیس آمریکانو
+                    </div>
+                    <div class="item-description">قهوه سرد با یخ خرد شده</div>
                 </div>
                 <div class="item-price">۶۰,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">آیس لاته</div>
-                    <div class="item-description">اسپرسو، شیر سرد و یخ</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🥤</span>
+                        آیس لاته
+                    </div>
+                    <div class="item-description">قهوه با شیر سرد و یخ</div>
                 </div>
                 <div class="item-price">۷۵,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">فرپوچینو کارامل</div>
-                    <div class="item-description">قهوه یخ زده با کارامل و خامه</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🍮</span>
+                        فرپوچینو کارامل
+                    </div>
+                    <div class="item-description">نوشیدنی یخ زده با کارامل و خامه</div>
                 </div>
                 <div class="item-price">۸۵,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">موهیتو</div>
-                    <div class="item-description">نعناع تازه، لیمو، سودا و یخ</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🌿</span>
+                        موهیتو
+                    </div>
+                    <div class="item-description">نعناع تازه، لیمو و سودا</div>
                 </div>
                 <div class="item-price">۶۵,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">اسموتی توت فرنگی</div>
-                    <div class="item-description">توت فرنگی تازه، ماست و عسل</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🍓</span>
+                        اسموتی توت فرنگی
+                    </div>
+                    <div class="item-description">توت فرنگی تازه با ماست و عسل</div>
                 </div>
                 <div class="item-price">۷۰,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">لیموناد خانگی</div>
-                    <div class="item-description">آب لیمو تازه با نعناع و شکر قندی</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🍋</span>
+                        لیموناد خانگی
+                    </div>
+                    <div class="item-description">آب لیمو تازه با نعناع</div>
                 </div>
                 <div class="item-price">۵۰,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
                 <div class="item-info">
-                    <div class="item-name">شیک شکلاتی</div>
-                    <div class="item-description">بستنی وانیلی، شکلات و شیر</div>
+                    <div class="item-name">
+                        <span class="item-emoji">🍦</span>
+                        شیک شکلاتی
+                    </div>
+                    <div class="item-description">بستنی با شکلات و شیر</div>
                 </div>
                 <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
+        </div>
+        
+        <div class="footer">
+            💝 با عشق در کافه دلنشین آماده شده 💝
         </div>
     </div>
 </body>
