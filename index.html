@@ -120,6 +120,20 @@
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
+            gap: 20px;
+        }
+        
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-item:hover .item-image {
+            transform: scale(1.1) rotate(3deg);
         }
         
         .menu-item:before {
@@ -253,6 +267,7 @@
             </div>
             
             <div class="menu-item">
+                <img src="https://raw.githubusercontent.com/mkgamedeveloper-spec/cafe_delnesheen/main/IMG_20251122_221721_521.jpg" alt="کاپوچینو" class="item-image">
                 <div class="item-info">
                     <div class="item-name">
                         <span class="item-emoji">☕</span>
@@ -260,29 +275,7 @@
                     </div>
                     <div class="item-description">اسپرسو با شیر گرم و فوم خامه‌ای</div>
                 </div>
-                <div class="item-price">۶۵,۰۰۰ <span class="price-unit">تومان</span></div>
-            </div>
-            
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">
-                        <span class="item-emoji">🥛</span>
-                        لاته
-                    </div>
-                    <div class="item-description">قهوه ملایم با شیر داغ</div>
-                </div>
-                <div class="item-price">۷۰,۰۰۰ <span class="price-unit">تومان</span></div>
-            </div>
-            
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">
-                        <span class="item-emoji">🍫</span>
-                        موکا
-                    </div>
-                    <div class="item-description">قهوه با شکلات و شیر خوشمزه</div>
-                </div>
-                <div class="item-price">۷۵,۰۰۰ <span class="price-unit">تومان</span></div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
@@ -293,7 +286,75 @@
                     </div>
                     <div class="item-description">شکلات داغ با خامه و مارشمالو</div>
                 </div>
-                <div class="item-price">۶۸,۰۰۰ <span class="price-unit">تومان</span></div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <img src="https://raw.githubusercontent.com/mkgamedeveloper-spec/cafe_delnesheen/main/IMG_20251121_185732%20(1).jpg" alt="چاپس چاکلت" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍫</span>
+                        چاپس چاکلت
+                    </div>
+                    <div class="item-description">شکلات داغ با خامه و مارشمالو</div>
+                </div>
+                <div class="item-price">۹۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍫</span>
+                        قهوه شکلاتی
+                    </div>
+                    <div class="item-description">ترکیب قهوه و شکلات داغ</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🥛</span>
+                        لاته
+                    </div>
+                    <div class="item-description">قهوه ملایم با شیر داغ</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍮</span>
+                        کارامل ماکیاتو گرم
+                    </div>
+                    <div class="item-description">قهوه با کارامل و شیر داغ</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">☕</span>
+                        شیر نسکافه
+                    </div>
+                    <div class="item-description">نسکافه با شیر داغ</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <img src="https://raw.githubusercontent.com/mkgamedeveloper-spec/cafe_delnesheen/main/IMG_20251121_192907%20(1).jpg" alt="چای" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍵</span>
+                        چای سنتی
+                    </div>
+                    <div class="item-description">چای تازه دم با طعم اصیل</div>
+                </div>
+                <div class="item-price">۳۰,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
             
             <div class="menu-item">
@@ -305,6 +366,197 @@
                     <div class="item-description">چای معطر با ادویه و شیر</div>
                 </div>
                 <div class="item-price">۵۵,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+        </div>
+        
+        <div class="decorative-line">
+            <span>🌸</span>
+            <span>☀️</span>
+            <span>🌈</span>
+            <span>⭐</span>
+        </div>
+        
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">🍳 صبحانه</h2>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍳</span>
+                        املت
+                    </div>
+                    <div class="item-description">املت تازه با سبزیجات</div>
+                </div>
+                <div class="item-price">۷۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🥚</span>
+                        نیمرو
+                    </div>
+                    <div class="item-description">تخم مرغ نیمرو با نان تست</div>
+                </div>
+                <div class="item-price">۶۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍲</span>
+                        عدسی
+                    </div>
+                    <div class="item-description">سوپ عدسی خوشمزه و گرم</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🫘</span>
+                        لوبیا
+                    </div>
+                    <div class="item-description">خوراک لوبیا با نان تازه</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🌭</span>
+                        سوسیس تخم مرغ
+                    </div>
+                    <div class="item-description">سوسیس و تخم مرغ با نان</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🥚</span>
+                        تخم مرغ
+                    </div>
+                    <div class="item-description">تخم مرغ سرخ شده</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🥚</span>
+                        خرما
+                    </div>
+                    <div class="item-description">خرما تازه و شیرین</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🧀</span>
+                        پنیر برشته
+                    </div>
+                    <div class="item-description">پنیر سرخ شده با سبزی</div>
+                </div>
+                <div class="item-price">۷۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🥞</span>
+                        پنکیک با سس شکلات
+                    </div>
+                    <div class="item-description">پنکیک نرم با سس شکلات و خامه</div>
+                </div>
+                <div class="item-price">۷۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+        </div>
+        
+        <div class="decorative-line">
+            <span>🌸</span>
+            <span>☀️</span>
+            <span>🌈</span>
+            <span>⭐</span>
+        </div>
+        
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">🍰 عصرانه و دسر</h2>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍰</span>
+                        کیک
+                    </div>
+                    <div class="item-description">کیک خانگی تازه و خوشمزه</div>
+                </div>
+                <div class="item-price">۷۵,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🥞</span>
+                        پنکیک
+                    </div>
+                    <div class="item-description">پنکیک نرم با عسل</div>
+                </div>
+                <div class="item-price">۷۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍪</span>
+                        چیزکیک لوتوس
+                    </div>
+                    <div class="item-description">چیزکیک با طعم بیسکویت لوتوس</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍮</span>
+                        چیزکیک ژله
+                    </div>
+                    <div class="item-description">چیزکیک با لایه ژله میوه‌ای</div>
+                </div>
+                <div class="item-price">۷۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">☕</span>
+                        تیرامیسو
+                    </div>
+                    <div class="item-description">دسر ایتالیایی با قهوه و ماسکارپونه</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">
+                        <span class="item-emoji">🍨</span>
+                        دسر پان
+                    </div>
+                    <div class="item-description">دسر خامه‌ای با نان ترد</div>
+                </div>
+                <div class="item-price">۸۰,۰۰۰ <span class="price-unit">تومان</span></div>
             </div>
         </div>
         
@@ -343,10 +595,11 @@
             </div>
             
             <div class="menu-item">
+                <img src="https://raw.githubusercontent.com/mkgamedeveloper-spec/cafe_delnesheen/3b3703416c940f6874cde1894fe16c548fd52f91/IMG_20251105_132223%20(1).jpg" alt="کارامل ماکیاتو" class="item-image">
                 <div class="item-info">
                     <div class="item-name">
                         <span class="item-emoji">🍮</span>
-                        فرپوچینو کارامل
+                        کارامل ماکیاتو
                     </div>
                     <div class="item-description">نوشیدنی یخ زده با کارامل و خامه</div>
                 </div>
