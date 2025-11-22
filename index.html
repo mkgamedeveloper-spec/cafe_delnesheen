@@ -217,27 +217,89 @@
         }
         
         @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+            
             .container {
                 padding: 30px 20px;
+                border-radius: 30px;
+            }
+            
+            .coffee-icon {
+                font-size: 50px;
             }
             
             .logo {
-                font-size: 42px;
+                font-size: 38px;
+            }
+            
+            .tagline {
+                font-size: 14px;
             }
             
             .section-title {
-                font-size: 26px;
+                font-size: 24px;
+            }
+            
+            .section-header {
+                padding: 15px 20px;
             }
             
             .menu-item {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 20px;
+                flex-direction: row;
+                align-items: center;
+                padding: 15px;
+                gap: 12px;
+            }
+            
+            .item-image {
+                width: 70px;
+                height: 70px;
+                flex-shrink: 0;
+            }
+            
+            .item-info {
+                flex: 1;
+                min-width: 0;
+            }
+            
+            .item-name {
+                font-size: 17px;
+                gap: 6px;
+            }
+            
+            .item-emoji {
+                font-size: 20px;
+            }
+            
+            .item-description {
+                font-size: 13px;
+                display: none;
             }
             
             .item-price {
+                font-size: 18px;
                 margin-right: 0;
-                margin-top: 10px;
+                min-width: auto;
+                text-align: right;
+                flex-shrink: 0;
+            }
+            
+            .price-unit {
+                font-size: 11px;
+            }
+            
+            .decorative-line {
+                font-size: 20px;
+                gap: 10px;
+                margin: 20px 0;
+            }
+            
+            .footer {
+                font-size: 14px;
+                margin-top: 30px;
+                padding-top: 20px;
             }
         }
     </style>
