@@ -601,9 +601,439 @@
             </div>
         </div>
         
+        <div class="decorative-line">
+            <span>🌸</span>
+            <span>☀️</span>
+            <span>🌈</span>
+            <span>⭐</span>
+        </div>
+        
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">🎮 تتریس کافه</h2>
+            </div>
+            
+            <div class="game-container">
+                <p class="game-text">بیا توی انتظار سفارشت، یکم بازی کنیم! 🎯</p>
+                <canvas id="gameCanvas" width="300" height="600"></canvas>
+                <div class="game-controls">
+                    <div class="game-score-display">امتیاز: <span id="scoreDisplay">0</span></div>
+                    <div class="game-level-display">سطح: <span id="levelDisplay">1</span></div>
+                    <button class="game-btn" id="startBtn">شروع بازی 🎮</button>
+                </div>
+                <p class="game-hint">📱 دکمه‌ها: ← → چرخش، ↓ سقوط سریع<br>موبایل: سوایپ چپ/راست، تپ برای چرخش</p>
+            </div>
+        </div>
+        
         <div class="footer">
             💝 با عشق در کافه دلنشین آماده شده 💝
         </div>
     </div>
+    
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        const ROWS = 20;
+        const COLS = 10;
+        const BLOCK_SIZE = 30;
+        
+        let board = [];
+        let score = 0;
+        let level = 1;
+        let gameRunning = false;
+        let currentPiece = null;
+        let gameLoop = null;
+        let dropCounter = 0;
+        let dropInterval = 1000;
+        let lastTime = 0;
+        
+        const SHAPES = [
+            [[1,1,1,1]], // I
+            [[1,1],[1,1]], // O
+            [[1,1,1],[0,1,0]], // T
+            [[1,1,1],[1,0,0]], // L
+            [[1,1,1],[0,0,1]], // J
+            [[1,1,0],[0,1,1]], // S
+            [[0,1,1],[1,1,0]]  // Z
+        ];
+        
+        const COLORS = ['#FF6B9D', '#FFA500', '#FFD93D', '#C2FFD9', '#A8E6CF', '#FFB6D9', '#FFC3A0'];
+        
+        function createBoard() {
+            board = Array(ROWS).fill(null).map(() => Array(COLS).fill(0));
+        }
+        
+        function createPiece() {
+            const shape = SHAPES[Math.floor(Math.random() * SHAPES.length)];
+            const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+            return {
+                shape: shape,
+                color: color,
+                x: Math.floor(COLS / 2) - Math.floor(shape[0].length / 2),
+                y: 0
+            };
+        }
+        
+        function drawBlock(x, y, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1);
+        }
+        
+        function drawBoard() {
+            ctx.fillStyle = '#FFF9E6';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            for (let y = 0; y < ROWS; y++) {
+                for (let x = 0; x < COLS; x++) {
+                    if (board[y][x]) {
+                        drawBlock(x, y, board[y][x]);
+                    }
+                }
+            }
+        }
+        
+        function drawPiece() {
+            if (!currentPiece) return;
+            currentPiece.shape.forEach((row, y) => {
+                row.forEach((value, x) => {
+                    if (value) {
+                        drawBlock(currentPiece.x + x, currentPiece.y + y, currentPiece.color);
+                    }
+                });
+            });
+        }
+        
+        function collision() {
+            for (let y = 0; y < currentPiece.shape.length; y++) {
+                for (let x = 0; x < currentPiece.shape[y].length; x++) {
+                    if (currentPiece.shape[y][x]) {
+                        const newX = currentPiece.x + x;
+                        const newY = currentPiece.y + y;
+                        
+                        if (newX < 0 || newX >= COLS || newY >= ROWS) {
+                            return true;
+                        }
+                        if (newY >= 0 && board[newY][newX]) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        
+        function merge() {
+            currentPiece.shape.forEach((row, y) => {
+                row.forEach((value, x) => {
+                    if (value) {
+                        const boardY = currentPiece.y + y;
+                        const boardX = currentPiece.x + x;
+                        if (boardY >= 0) {
+                            board[boardY][boardX] = currentPiece.color;
+                        }
+                    }
+                });
+            });
+        }
+        
+        function rotate() {
+            const rotated = currentPiece.shape[0].map((_, i) =>
+                currentPiece.shape.map(row => row[i]).reverse()
+            );
+            const previousShape = currentPiece.shape;
+            currentPiece.shape = rotated;
+            
+            if (collision()) {
+                currentPiece.shape = previousShape;
+            }
+        }
+        
+        function moveDown() {
+            currentPiece.y++;
+            if (collision()) {
+                currentPiece.y--;
+                merge();
+                clearLines();
+                currentPiece = createPiece();
+                if (collision()) {
+                    endGame();
+                }
+            }
+        }
+        
+        function moveLeft() {
+            currentPiece.x--;
+            if (collision()) {
+                currentPiece.x++;
+            }
+        }
+        
+        function moveRight() {
+            currentPiece.x++;
+            if (collision()) {
+                currentPiece.x--;
+            }
+        }
+        
+        function drop() {
+            while (!collision()) {
+                currentPiece.y++;
+            }
+            currentPiece.y--;
+            merge();
+            clearLines();
+            currentPiece = createPiece();
+            if (collision()) {
+                endGame();
+            }
+        }
+        
+        function clearLines() {
+            let linesCleared = 0;
+            for (let y = ROWS - 1; y >= 0; y--) {
+                if (board[y].every(cell => cell !== 0)) {
+                    board.splice(y, 1);
+                    board.unshift(Array(COLS).fill(0));
+                    linesCleared++;
+                    y++;
+                }
+            }
+            
+            if (linesCleared > 0) {
+                score += linesCleared * 100 * level;
+                level = Math.floor(score / 1000) + 1;
+                dropInterval = Math.max(100, 1000 - (level - 1) * 100);
+                document.getElementById('scoreDisplay').textContent = score;
+                document.getElementById('levelDisplay').textContent = level;
+            }
+        }
+        
+        function update(time = 0) {
+            if (!gameRunning) return;
+            
+            const deltaTime = time - lastTime;
+            lastTime = time;
+            dropCounter += deltaTime;
+            
+            if (dropCounter > dropInterval) {
+                moveDown();
+                dropCounter = 0;
+            }
+            
+            drawBoard();
+            drawPiece();
+            
+            requestAnimationFrame(update);
+        }
+        
+        function startGame() {
+            if (gameRunning) return;
+            
+            createBoard();
+            currentPiece = createPiece();
+            score = 0;
+            level = 1;
+            dropInterval = 1000;
+            dropCounter = 0;
+            lastTime = 0;
+            gameRunning = true;
+            
+            document.getElementById('scoreDisplay').textContent = '0';
+            document.getElementById('levelDisplay').textContent = '1';
+            document.getElementById('startBtn').textContent = 'در حال بازی... ⏸️';
+            
+            requestAnimationFrame(update);
+        }
+        
+        function endGame() {
+            gameRunning = false;
+            document.getElementById('startBtn').textContent = 'شروع دوباره 🎮';
+            
+            ctx.fillStyle = 'rgba(255, 107, 157, 0.9)';
+            ctx.fillRect(20, canvas.height / 2 - 100, canvas.width - 40, 200);
+            
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 30px Vazirmatn, Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('بازی تمام شد! 🎉', canvas.width / 2, canvas.height / 2 - 30);
+            
+            ctx.font = 'bold 24px Vazirmatn, Arial';
+            ctx.fillText('امتیاز: ' + score, canvas.width / 2, canvas.height / 2 + 10);
+            ctx.fillText('سطح: ' + level, canvas.width / 2, canvas.height / 2 + 45);
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (!gameRunning) return;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    moveLeft();
+                    break;
+                case 'ArrowRight':
+                    moveRight();
+                    break;
+                case 'ArrowDown':
+                    moveDown();
+                    break;
+                case 'ArrowUp':
+                    rotate();
+                    break;
+                case ' ':
+                    drop();
+                    break;
+            }
+        });
+        
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        canvas.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        });
+        
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        });
+        
+        canvas.addEventListener('touchend', (e) => {
+            if (!gameRunning) return;
+            
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const dx = touchEndX - touchStartX;
+            const dy = touchEndY - touchStartY;
+            
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 30) {
+                    moveRight();
+                } else if (dx < -30) {
+                    moveLeft();
+                }
+            } else {
+                if (dy > 30) {
+                    moveDown();
+                } else if (Math.abs(dx) < 20 && Math.abs(dy) < 20) {
+                    rotate();
+                }
+            }
+        });
+        
+        document.getElementById('startBtn').addEventListener('click', startGame);
+        
+        ctx.fillStyle = '#FFF9E6';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#FF6B9D';
+        ctx.font = 'bold 20px Vazirmatn, Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('روی دکمه شروع کلیک کن!', canvas.width / 2, canvas.height / 2);
+    </script>
+    
+    <style>
+        .game-container {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFE6F0 100%);
+            padding: 30px;
+            border-radius: 25px;
+            text-align: center;
+        }
+        
+        .game-text {
+            font-size: 18px;
+            color: #FF6B9D;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        #gameCanvas {
+            background: #FFF9E6;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: block;
+            margin: 0 auto 20px;
+            border: 3px solid #FF6B9D;
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .game-score-display,
+        .game-level-display {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-btn {
+            background: linear-gradient(135deg, #FF6B9D, #FFA500);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 107, 157, 0.3);
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        .game-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 107, 157, 0.4);
+        }
+        
+        .game-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .game-hint {
+            font-size: 13px;
+            color: #666;
+            margin-top: 15px;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 20px 10px;
+            }
+            
+            .game-text {
+                font-size: 16px;
+            }
+            
+            #gameCanvas {
+                max-width: 100%;
+                height: auto;
+            }
+            
+            .game-score-display,
+            .game-level-display {
+                font-size: 15px;
+                padding: 8px 15px;
+            }
+            
+            .game-btn {
+                padding: 10px 20px;
+                font-size: 15px;
+            }
+            
+            .game-hint {
+                font-size: 12px;
+            }
+        }
+    </style>
 </body>
 </html>
